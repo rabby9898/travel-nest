@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cards from "./Cards";
 import Container from "../Shared/Container";
 import { useSearchParams } from "react-router-dom";
 import Heading from "../Shared/Heading/Heading";
+import AuthProvider from "../../Provider/AuthProvider/AuthProvider";
+import Loader from "../Shared/Loader/Loader";
 
 const Room = () => {
   const [rooms, setRooms] = useState([]);
   const [params, setParams] = useSearchParams();
+  const { loading, setLoading } = useContext(AuthProvider);
 
   const category = params.get("category");
 
   useEffect(() => {
+    setLoading(true);
     fetch("room.json")
       .then((res) => res.json())
       .then((data) => {
@@ -18,8 +22,11 @@ const Room = () => {
           const filtered = data.filter((room) => room.category === category);
           setRooms(filtered);
         } else setRooms(data);
+        setLoading(false);
       });
-  }, [category]);
+  }, [category, setLoading]);
+
+  if (loading) return <Loader />;
   return (
     <Container>
       {rooms && rooms.length > 0 ? (
