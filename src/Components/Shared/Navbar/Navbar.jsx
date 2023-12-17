@@ -14,7 +14,7 @@ const Navbar = () => {
                 // className="hidden md:block"
                 src={logoImg}
                 alt="logo"
-                width="100"
+                width="130"
                 height="120"
               />
             </Link>
