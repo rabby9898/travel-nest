@@ -1,15 +1,15 @@
-import { ScaleLoader } from "react-spinners";
+import { FadeLoader } from "react-spinners";
 
-const Loader = ({ MoonLoader }) => {
+const Loader = ({ smallHeight }) => {
   return (
     <div
-      className={` ${MoonLoader ? "h-[250px]" : "h-[70vh]"}
+      className={` ${smallHeight ? "h-[250px]" : "h-[70vh]"}
       flex 
       flex-col 
       justify-center 
       items-center `}
     >
-      <ScaleLoader size={100} color="blue" />
+      <FadeLoader size={30} color="blue" />
     </div>
   );
 };

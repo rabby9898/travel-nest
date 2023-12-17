@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Cards from "./Cards";
 import Container from "../Shared/Container";
 import { useSearchParams } from "react-router-dom";
 import Heading from "../Shared/Heading/Heading";
-import AuthProvider from "../../Provider/AuthProvider/AuthProvider";
 import Loader from "../Shared/Loader/Loader";
 
 const Room = () => {
   const [rooms, setRooms] = useState([]);
   const [params, setParams] = useSearchParams();
-  const { loading, setLoading } = useContext(AuthProvider);
+  const [loading, setLoading] = useState(false);
 
   const category = params.get("category");
 

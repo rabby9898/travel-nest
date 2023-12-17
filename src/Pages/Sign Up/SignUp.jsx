@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-
+import { imageUpload } from "../../Api/ImageUpload";
 const SignUp = () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const image = form.image.files[0];
+    const imageUrl = await imageUpload(image);
+
+    console.log(imageUrl);
+  };
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900 border-2 border-blue-800">
@@ -12,6 +23,7 @@ const SignUp = () => {
           </p>
         </div>
         <form
+          onSubmit={handleSignUp}
           noValidate=""
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
@@ -39,7 +51,7 @@ const SignUp = () => {
                 type="file"
                 id="image"
                 name="image"
-                accept="image/*"
+                // accept="image/png"
               />
             </div>
             <div>
