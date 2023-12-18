@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { imageUpload } from "../../Api/ImageUpload";
+import useAuth from "../../Hooks/useAuth/useAuth";
+import { savedUser, token } from "../../Api/UsersApi";
+import toast from "react-hot-toast";
 const SignUp = () => {
+  const { createUser, signInWithGoogle, updateUserProfile } = useAuth();
   const handleSignUp = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -9,9 +13,22 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-    const imageUrl = await imageUpload(image);
 
-    console.log(imageUrl);
+    try {
+      const imageUrl = await imageUpload(image);
+      const res = await createUser(email, password);
+      await updateUserProfile(name, imageUrl?.data?.display_url);
+      console.log(res);
+
+      const saveToDb = await savedUser(res?.user);
+      console.log(saveToDb);
+
+      await token(res?.user?.email);
+      toast.success("Successfully Signed in");
+    } catch (err) {
+      console.log(err);
+      toast.err(`Sign up failed: ${err.message}`);
+    }
   };
   return (
     <div className="flex justify-center items-center min-h-screen">
