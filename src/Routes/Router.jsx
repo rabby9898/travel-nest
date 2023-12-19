@@ -6,6 +6,7 @@ import SignUp from "../Pages/Sign Up/SignUp";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import RoomDetails from "../Pages/RoomDetails/RoomDetails";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
+import { getSingleRooms } from "../Api/Rooms";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
             <RoomDetails></RoomDetails>
           </PrivateRoutes>
         ),
-        loader: () => fetch("/room.json"),
+        loader: ({ params }) => getSingleRooms(params.id),
       },
     ],
   },

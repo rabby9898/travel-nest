@@ -6,9 +6,10 @@ import RoomInfo from "../../Components/RoomDetails/RoomInfo";
 import RoomReservation from "../../Components/RoomDetails/RoomReservation";
 
 const RoomDetails = () => {
-  const roomLoader = useLoaderData();
-  const { id } = useParams();
-  const roomData = roomLoader.find((room) => room._id === id);
+  const roomData = useLoaderData();
+  console.log(roomData);
+  // const { id } = useParams();
+  // const roomData = roomLoader.find((room) => room._id === id);
   const { title } = roomData;
   return (
     <Container>
@@ -23,7 +24,7 @@ const RoomDetails = () => {
           <RoomInfo roomData={roomData} />
           <div className="col-span-3 order-first md:order-last mb-10">
             <h1>Calender</h1>
-            <RoomReservation />
+            <RoomReservation roomData={roomData} />
           </div>
         </div>
       </div>
