@@ -1,10 +1,11 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import useAuth from "../../../Hooks/useAuth/useAuth";
+import { FaUser } from "react-icons/fa";
 const MenuDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { user, logOut } = useAuth();
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -22,39 +23,60 @@ const MenuDropdown = () => {
           <AiOutlineMenu />
           <div className="hidden md:block">
             {/* Avatar */}
-            <img
-              className="rounded-full"
-              referrerPolicy="no-referrer"
-              //   src={user && user.photoURL ? user.photoURL : avatarImg}
-              alt="profile"
-              height="30"
-              width="30"
-            />
+            {user ? (
+              <>
+                <img
+                  className="rounded-full"
+                  referrerPolicy="no-referrer"
+                  src={user?.photoURL}
+                  alt="profile"
+                  height="30"
+                  width="30"
+                />
+              </>
+            ) : (
+              <>
+                <FaUser />
+              </>
+            )}
           </div>
         </div>
       </div>
       {isOpen && (
         <div className="absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm">
           <div className="flex flex-col cursor-pointer">
-            <Link
-              to="/"
-              className="block md:hidden px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
-            >
-              Home
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="block md:hidden px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
+                >
+                  Dashboard
+                </Link>
 
-            <Link
-              to="/login"
-              className="px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
-            >
-              Login
-            </Link>
-            <Link
-              to="/signup"
-              className="px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
-            >
-              Sign Up
-            </Link>
+                <div
+                  onClick={logOut}
+                  className="px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
+                >
+                  Logout
+                </div>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

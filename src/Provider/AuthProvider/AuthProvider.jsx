@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
+import auth from "../../Firebase/firebase.config";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -10,7 +11,9 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import auth from "../../Firebase/firebase.config";
+import { clearToken } from "../../Api/UsersApi";
+
+// import { clearToken } from "../../Api/UsersApi";
 
 export const AuthContext = createContext(null);
 const googleProvider = new GoogleAuthProvider();
@@ -39,8 +42,9 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  const logOut = () => {
+  const logOut = async () => {
     setLoading(true);
+    await clearToken();
     return signOut(auth);
   };
 

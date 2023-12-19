@@ -1,7 +1,47 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import useAuth from "../../Hooks/useAuth/useAuth";
+import { getToken, savedUser } from "../../Api/UsersApi";
+import toast from "react-hot-toast";
+import { ImSpinner3 } from "react-icons/im";
 
 const Login = () => {
+  const { signIn, signInWithGoogle, loading } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+  const from = location?.state?.from?.pathname || "/";
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const result = await signIn(email, password);
+      console.log(result);
+
+      await getToken(result?.user?.email);
+      toast.success("Successfully Signed In");
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.log(err);
+      toast.err(`Sign up failed: ${err.message}`);
+    }
+  };
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const saveGoogleUserDb = await savedUser(result?.user);
+      console.log(saveGoogleUserDb);
+
+      await getToken(result?.user?.email);
+      toast.success("Successfully Signed in");
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900 border-2 border-blue-800">
@@ -12,6 +52,7 @@ const Login = () => {
           </p>
         </div>
         <form
+          onSubmit={handleSignIn}
           noValidate=""
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
@@ -54,7 +95,11 @@ const Login = () => {
               type="submit"
               className="bg-blue-800 w-full rounded-md py-3 text-white"
             >
-              Continue
+              {loading ? (
+                <ImSpinner3 className="animate-spin mx-auto" />
+              ) : (
+                "Continue"
+              )}
             </button>
           </div>
         </form>
@@ -70,7 +115,10 @@ const Login = () => {
           </p>
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
-        <div className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer">
+        <div
+          onClick={handleGoogleSignIn}
+          className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer"
+        >
           <FcGoogle size={32} />
 
           <p>Continue with Google</p>

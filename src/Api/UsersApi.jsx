@@ -10,8 +10,16 @@ export const savedUser = async (user) => {
   return data;
 };
 
-export const token = async (email) => {
+// create user token
+export const getToken = async (email) => {
   const { data } = await axiosSecure.post("/jwt", email);
+
+  return data;
+};
+
+// Remove user token
+export const clearToken = async () => {
+  const { data } = await axiosSecure.get("/logout");
 
   return data;
 };
