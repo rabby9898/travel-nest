@@ -7,6 +7,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import RoomDetails from "../Pages/RoomDetails/RoomDetails";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 import { getSingleRooms } from "../Api/Rooms";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,15 @@ const router = createBrowserRouter([
   {
     path: "signup",
     element: <SignUp></SignUp>,
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: "dashboard",
+      },
+    ],
   },
 ]);
 export default router;
