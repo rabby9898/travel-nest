@@ -1,6 +1,6 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth/useAuth";
 import { FaUser } from "react-icons/fa";
 const MenuDropdown = () => {
@@ -49,7 +49,7 @@ const MenuDropdown = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="block md:hidden px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
+                  className="block px-4 py-3 hover:bg-blue-800 hover:text-white hover:rounded-xl transition font-semibold"
                 >
                   Dashboard
                 </Link>
