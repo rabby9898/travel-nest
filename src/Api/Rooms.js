@@ -6,9 +6,9 @@ export const getRooms = async () => {
   return data;
 };
 
-// get rooms at tablle list
+// get rooms at table list
 export const getTableRooms = async (email) => {
-  const { data } = await axiosSecure(`/room/${email}`);
+  const { data } = await axiosSecure(`/rooms/${email}`);
   return data;
 };
 

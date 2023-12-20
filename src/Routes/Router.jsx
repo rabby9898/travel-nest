@@ -46,11 +46,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "add-room",
-        element: <AddRoom></AddRoom>,
+        element: (
+          <PrivateRoutes>
+            <AddRoom></AddRoom>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "my-listing",
-        element: <MyListing></MyListing>,
+        element: (
+          <PrivateRoutes>
+            <MyListing></MyListing>
+          </PrivateRoutes>
+        ),
       },
     ],
   },
