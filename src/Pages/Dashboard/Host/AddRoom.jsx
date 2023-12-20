@@ -2,15 +2,20 @@ import { useState } from "react";
 import AddRoomForm from "../../../Components/Form/AddRoom";
 import useAuth from "../../../Hooks/useAuth/useAuth";
 import { imageUpload } from "../../../Api/ImageUpload";
-import { eo } from "date-fns/locale";
+import { addRoom } from "../../../Api/Rooms";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddRoom = () => {
   const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [uploadImageText, setUploadImageText] = useState("Upload Image");
   const [dates, setDates] = useState({
     startDate: new Date(),
-    ednDate: new Date(),
+    endDate: new Date(),
     key: "selection",
   });
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ const AddRoom = () => {
     const bedrooms = form.bedrooms.value;
     const bathrooms = form.bathrooms.value;
     const description = form.description.value;
-    const to = dates.ednDate;
+    const to = dates.endDate;
     const from = dates.startDate;
     const image = form.image.files[0];
     const host = {
@@ -48,12 +53,27 @@ const AddRoom = () => {
       description,
       image: img_url?.data?.display_url,
     };
-    console.log(roomData);
+    try {
+      setLoading(true);
+      const data = await addRoom(roomData);
+      console.log(data);
+      setUploadImageText("Uploading..");
+      toast.success("Your Room Has Been Added");
+      navigate("/dashboard/my-listing");
+    } catch (err) {
+      console.log(err);
+      toast.error("Room Added Failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDates = (ranges) => {
     console.log(ranges);
     setDates(ranges.selection);
+  };
+  const handleImage = (image) => {
+    setUploadImageText(image.name);
   };
   return (
     <div>
@@ -61,6 +81,9 @@ const AddRoom = () => {
         dates={dates}
         handleSubmit={handleSubmit}
         handleDates={handleDates}
+        handleImage={handleImage}
+        uploadImageText={uploadImageText}
+        loading={loading}
       ></AddRoomForm>
     </div>
   );

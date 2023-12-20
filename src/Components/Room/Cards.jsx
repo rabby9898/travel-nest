@@ -1,7 +1,8 @@
+import { MdLocationOn } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Cards = ({ room }) => {
-  const { _id, price, location } = room;
+  const { _id, price, location, image, title } = room;
   return (
     <Link to={`/roomDetails/${_id}`}>
       <div className="col-span-1 cursor-pointer group">
@@ -23,7 +24,7 @@ const Cards = ({ room }) => {
               group-hover:scale-110 
               transition
             "
-              src="https://a0.muscache.com/im/pictures/4f70b681-a792-4530-8c52-f2a8d262942d.jpg"
+              src={image}
               alt="Room"
             />
             <div
@@ -34,7 +35,11 @@ const Cards = ({ room }) => {
           "
             ></div>
           </div>
-          <div className="font-semibold text-lg">{location}</div>
+          <div className="font-semibold text-xl">{title}</div>
+          <div className="flex items-center gap-2 font text-lg my-4">
+            <MdLocationOn className="text-red-600 text-xl" />
+            {location}
+          </div>
           {/* <div className="font-light text-neutral-500">
             5 nights . June 19 - 26
           </div> */}

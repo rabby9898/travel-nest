@@ -6,8 +6,19 @@ export const getRooms = async () => {
   return data;
 };
 
+// get rooms at tablle list
+export const getTableRooms = async (email) => {
+  const { data } = await axiosSecure(`/room/${email}`);
+  return data;
+};
+
 // get single rooms
 export const getSingleRooms = async (id) => {
   const { data } = await axiosSecure(`/room/${id}`);
+  return data;
+};
+// add room
+export const addRoom = async (roomData) => {
+  const { data } = await axiosSecure.post(`/add-room`, roomData);
   return data;
 };
