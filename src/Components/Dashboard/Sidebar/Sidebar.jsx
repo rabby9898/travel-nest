@@ -13,11 +13,13 @@ import MenuItem from "./MenuItem/MenuItem";
 import ToggleBtn from "../ToggleBtn/ToggleBtn";
 import { MdBedroomParent } from "react-icons/md";
 import useAuth from "../../../Hooks/useAuth/useAuth";
+import useRole from "../../../Hooks/useRole/useRole";
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [toggle, setToggle] = useState(false);
   const [isActive, setActive] = useState(false);
-
+  const [role] = useRole();
+  console.log("Role -------->", role);
   //   For guest/host menu item toggle button
   const toggleHandler = (event) => {
     setToggle(event.target.checked);
