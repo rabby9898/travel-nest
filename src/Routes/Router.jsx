@@ -12,6 +12,8 @@ import MyListing from "../Pages/Dashboard/Host/MyListing";
 import AddRoom from "../Pages/Dashboard/Host/AddRoom";
 import HostMenu from "../Components/Dashboard/HostMenu/HostMenu";
 import HostRoute from "./HostRoute/HostRoute";
+import AdminRoute from "./AdminRoute/AdminRoute";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +65,16 @@ const router = createBrowserRouter([
             <HostRoute>
               <MyListing></MyListing>
             </HostRoute>
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "manage-users",
+        element: (
+          <PrivateRoutes>
+            <AdminRoute>
+              <ManageUsers></ManageUsers>
+            </AdminRoute>
           </PrivateRoutes>
         ),
       },
