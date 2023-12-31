@@ -3,8 +3,8 @@ import Loader from "../../Components/Shared/Loader/Loader";
 import useRole from "../../Hooks/useRole/useRole";
 
 const AdminRoute = ({ children }) => {
-  const [role, loading] = useRole();
-  if (loading) return <Loader />;
+  const [role, isLoading] = useRole();
+  if (isLoading) return <Loader />;
   if (role.role === "admin") return children;
   return <Navigate to={"/dashboard"} />;
 };

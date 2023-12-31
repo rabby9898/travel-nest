@@ -25,5 +25,5 @@ export const clearToken = async () => {
 };
 export const getRole = async (email) => {
   const { data } = await axiosSecure.get(`/user/${email}`);
-  return data;
+  return data.role;
 };

@@ -86,21 +86,11 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             {/* If a user is host */}
-            {role.role === "host" && (
-              <ToggleBtn toggleHandler={toggleHandler} />
-            )}
+            {role === "host" && <ToggleBtn toggleHandler={toggleHandler} />}
             <nav>
-              {role.role === "host" ? (
-                toggle ? (
-                  <HostMenu />
-                ) : (
-                  <GuestMenu />
-                )
-              ) : (
-                ""
-              )}
-              {role.role === "admin" && <AdminMenu></AdminMenu>}
-              {role.role === "guest" && <GuestMenu></GuestMenu>}
+              {role === "host" ? toggle ? <HostMenu /> : <GuestMenu /> : ""}
+              {role === "admin" && <AdminMenu></AdminMenu>}
+              {role === "guest" && <GuestMenu></GuestMenu>}
             </nav>
           </div>
         </div>
