@@ -3,13 +3,19 @@ import useAuth from "../useAuth/useAuth";
 import { getRole } from "../../Api/UsersApi";
 
 const useRole = () => {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const [role, setRole] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getRole(user?.email).then((data) => setRole(data));
+    setLoading(true);
+    getRole(user?.email).then((data) => {
+      setRole(data);
+      setLoading(false);
+    });
   }, [user]);
-  return [role];
+
+  return [role, loading];
 };
 
 export default useRole;

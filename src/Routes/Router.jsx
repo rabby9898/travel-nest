@@ -10,6 +10,8 @@ import { getSingleRooms } from "../Api/Rooms";
 import DashboardLayout from "../Layout/DashboardLayout";
 import MyListing from "../Pages/Dashboard/Host/MyListing";
 import AddRoom from "../Pages/Dashboard/Host/AddRoom";
+import HostMenu from "../Components/Dashboard/HostMenu/HostMenu";
+import HostRoute from "./HostRoute/HostRoute";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +50,9 @@ const router = createBrowserRouter([
         path: "add-room",
         element: (
           <PrivateRoutes>
-            <AddRoom></AddRoom>
+            <HostRoute>
+              <AddRoom></AddRoom>
+            </HostRoute>
           </PrivateRoutes>
         ),
       },
@@ -56,7 +60,9 @@ const router = createBrowserRouter([
         path: "my-listing",
         element: (
           <PrivateRoutes>
-            <MyListing></MyListing>
+            <HostRoute>
+              <MyListing></MyListing>
+            </HostRoute>
           </PrivateRoutes>
         ),
       },
