@@ -6,19 +6,22 @@ import logoImg from "../../../assets/logo-travel-nest.png";
 import { GrLogout } from "react-icons/gr";
 import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
-import { BsGraphUp } from "react-icons/bs";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 import MenuItem from "./MenuItem/MenuItem";
 import ToggleBtn from "../ToggleBtn/ToggleBtn";
-import { MdBedroomParent } from "react-icons/md";
 import useAuth from "../../../Hooks/useAuth/useAuth";
 import useRole from "../../../Hooks/useRole/useRole";
+import GuestMenu from "../GusetMenu/GuestMenu";
+import AdminMenu from "../AdminMenu/AdminMenu";
+import HostMenu from "../HostMenu/HostMenu";
+import toast from "react-hot-toast";
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [toggle, setToggle] = useState(false);
   const [isActive, setActive] = useState(false);
   const [role] = useRole();
+  const navigate = useNavigate();
   console.log("Role -------->", role);
   //   For guest/host menu item toggle button
   const toggleHandler = (event) => {
@@ -27,6 +30,12 @@ const Sidebar = () => {
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive);
+  };
+
+  const handleLogOut = () => {
+    logOut();
+    navigate("/");
+    toast.success("Log out Successfully");
   };
   return (
     <>
@@ -77,25 +86,21 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             {/* If a user is host */}
-            <ToggleBtn toggleHandler={toggleHandler} />
+            {role.role === "host" && (
+              <ToggleBtn toggleHandler={toggleHandler} />
+            )}
             <nav>
-              <MenuItem
-                icon={BsGraphUp}
-                label="Statistics"
-                address="statistics"
-              />
-
-              {/* Menu Items */}
-              <MenuItem
-                icon={IoIosAddCircleOutline}
-                label="Add Room"
-                address="add-room"
-              />
-              <MenuItem
-                icon={MdBedroomParent}
-                label="My Listing"
-                address="my-listing"
-              />
+              {role.role === "host" ? (
+                toggle ? (
+                  <HostMenu />
+                ) : (
+                  <GuestMenu />
+                )
+              ) : (
+                ""
+              )}
+              {role.role === "admin" && <AdminMenu></AdminMenu>}
+              {role.role === "guest" && <GuestMenu></GuestMenu>}
             </nav>
           </div>
         </div>
@@ -109,7 +114,7 @@ const Sidebar = () => {
             address="/dashboard/profile"
           />
           <button
-            onClick={logOut}
+            onClick={handleLogOut}
             className="flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-blue-300   hover:text-gray-700 transition-colors duration-300 transform"
           >
             <GrLogout className="w-5 h-5" />
