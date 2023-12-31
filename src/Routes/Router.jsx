@@ -14,6 +14,7 @@ import HostMenu from "../Components/Dashboard/HostMenu/HostMenu";
 import HostRoute from "./HostRoute/HostRoute";
 import AdminRoute from "./AdminRoute/AdminRoute";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
+import Profile from "../Pages/Dashboard/Common/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
             <AdminRoute>
               <ManageUsers></ManageUsers>
             </AdminRoute>
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoutes>
+            <Profile></Profile>
           </PrivateRoutes>
         ),
       },
