@@ -5,7 +5,7 @@ import useRole from "../../Hooks/useRole/useRole";
 const AdminRoute = ({ children }) => {
   const [role, isLoading] = useRole();
   if (isLoading) return <Loader />;
-  if (role.role === "admin") return children;
+  if (role === "admin") return children;
   return <Navigate to={"/dashboard"} />;
 };
 

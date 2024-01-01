@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 import "./CheckoutForm.css";
 import { ImSpinner9 } from "react-icons/im";
 import useAuth from "../../Hooks/useAuth/useAuth";
-import { createPaymentIntent } from "../../Api/Bookings";
+import toast from "react-hot-toast";
+import {
+  createPaymentIntent,
+  saveBookingInfo,
+  updateStatus,
+} from "../../Api/Bookings";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ bookingInfo, closeModal }) => {
   const stripe = useStripe();
@@ -12,7 +18,7 @@ const CheckoutForm = ({ bookingInfo, closeModal }) => {
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
-
+  const navigate = useNavigate();
   // Create Payment Intent
   useEffect(() => {
     if (bookingInfo.price > 0) {
@@ -76,7 +82,20 @@ const CheckoutForm = ({ bookingInfo, closeModal }) => {
         transactionId: paymentIntent.id,
         date: new Date(),
       };
+      // Payment save to database steps
+      try {
+        saveBookingInfo(paymentInfo);
 
+        await updateStatus(bookingInfo.roomId, true);
+        const success = `Your payment is completed. TRX Id: ${paymentIntent.id}`;
+        toast.success(success);
+        navigate("/dashboard/my-booking");
+      } catch (err) {
+        console.log(err);
+        toast.error(err.message);
+      } finally {
+        setProcessing(false);
+      }
       setProcessing(false);
     }
   };
