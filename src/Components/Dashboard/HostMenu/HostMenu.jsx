@@ -1,5 +1,4 @@
 import MenuItem from "../Sidebar/MenuItem/MenuItem";
-import { BsGraphUp } from "react-icons/bs";
 
 import { MdBedroomParent } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
@@ -18,7 +17,6 @@ const HostMenu = () => {
         label="Add Room"
         address="add-room"
       />
-      <MenuItem icon={BsGraphUp} label="Statistics" address="statistics" />
     </>
   );
 };
