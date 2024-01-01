@@ -1,6 +1,6 @@
 import MenuItem from "../Sidebar/MenuItem/MenuItem";
 
-import { MdBedroomParent } from "react-icons/md";
+import { MdBedroomParent, MdOutlineManageHistory } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 const HostMenu = () => {
   return (
@@ -16,6 +16,11 @@ const HostMenu = () => {
         icon={IoIosAddCircleOutline}
         label="Add Room"
         address="add-room"
+      />
+      <MenuItem
+        icon={MdOutlineManageHistory}
+        label="Manage Bookings"
+        address="manage-bookings"
       />
     </>
   );
