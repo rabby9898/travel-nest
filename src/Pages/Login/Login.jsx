@@ -26,7 +26,8 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
-      toast.err(`Sign up failed: ${err.message}`);
+      toast.error(`Sign up failed: ${err.message}`);
+      form.reset();
     }
   };
   const handleGoogleSignIn = async () => {
@@ -40,6 +41,7 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
+      toast.error(err.message);
     }
   };
   return (
