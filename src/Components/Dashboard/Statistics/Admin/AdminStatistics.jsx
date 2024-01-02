@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { Calendar } from "react-date-range";
 import { FaUserAlt, FaDollarSign } from "react-icons/fa";
 import { BsFillCartPlusFill, BsFillHouseDoorFill } from "react-icons/bs";
-import { Calendar } from "react-date-range";
-import SalesLineChart from "./SalesLineChart";
+import { useEffect, useState } from "react";
 import { getAdminStats } from "../../../../Api/uttils";
+import SalesLineChart from "./SalesLineChart";
 
 const AdminStatistics = () => {
   const [statData, setStatData] = useState({});
   useEffect(() => {
-    getAdminStats().then((data) => {
-      setStatData(data);
-    });
+    getAdminStats().then((data) => setStatData(data));
   }, []);
   return (
     <div>
@@ -29,7 +27,7 @@ const AdminStatistics = () => {
                 Total Sales
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                $345
+                ${statData?.totalSale}
               </h4>
             </div>
           </div>
@@ -45,7 +43,7 @@ const AdminStatistics = () => {
                 Total User
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                23
+                {statData?.userCount}
               </h4>
             </div>
           </div>
@@ -61,7 +59,7 @@ const AdminStatistics = () => {
                 Total Bookings
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                345
+                {statData?.bookingCount}
               </h4>
             </div>
           </div>
@@ -77,7 +75,7 @@ const AdminStatistics = () => {
                 Total Rooms
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                454
+                {statData?.roomCount}
               </h4>
             </div>
           </div>
@@ -85,8 +83,9 @@ const AdminStatistics = () => {
 
         <div className="mb-4 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {/* Total Sales Graph */}
+
           <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
-            <SalesLineChart />
+            <SalesLineChart data={statData?.chartData} />
           </div>
           {/* Calender */}
           <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden">

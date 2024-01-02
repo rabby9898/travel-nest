@@ -1,12 +1,14 @@
+import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
+import Loader from "../../../Shared/Loader/Loader";
 
-export const data = [
-  ["Day", "Sales"],
-  ["9", 1000],
-  ["10", 1170],
-  ["11", 660],
-  ["12", 1030],
-];
+// export const data = [
+//   ['Year', 'Sales', 'Expenses'],
+//   ['11/23', 1000],
+//   ['2005', 1170],
+//   ['2006', 660],
+//   ['2007', 1030],
+// ]
 
 export const options = {
   title: "Sales Over Time",
@@ -14,9 +16,28 @@ export const options = {
   legend: { position: "bottom" },
   series: [{ color: "#F43F5E" }],
 };
-const SalesLineChart = () => {
+const SalesLineChart = ({ data }) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  }, []);
   return (
-    <Chart chartType="LineChart" width="100%" data={data} options={options} />
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Chart
+          chartType="LineChart"
+          width="100%"
+          height="400px"
+          data={data}
+          options={options}
+        />
+      )}
+    </>
   );
 };
 
