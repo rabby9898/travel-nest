@@ -89,7 +89,7 @@ const CheckoutForm = ({ bookingInfo, closeModal }) => {
         await updateStatus(bookingInfo.roomId, true);
         const success = `Your payment is completed. TRX Id: ${paymentIntent.id}`;
         toast.success(success);
-        navigate("/dashboard/my-booking");
+        navigate("/dashboard/my-bookings");
       } catch (err) {
         console.log(err);
         toast.error(err.message);
