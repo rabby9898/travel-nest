@@ -2,7 +2,7 @@ import axios from "axios";
 import { clearToken } from "./UsersApi";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "https://travel-nest-server-ten.vercel.app",
   withCredentials: true,
 });
 
